@@ -1,8 +1,14 @@
+
+import os
+print(os.environ['PATH'])
+
 import pandas as pd
+
 
 # Server
 import uvicorn
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 # Modeling
 from sklearn.linear_model import LogisticRegression
