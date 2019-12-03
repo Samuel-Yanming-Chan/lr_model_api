@@ -1,5 +1,8 @@
 
-import pandas as pd
+"""
+This app creates a FastAPI instance.  It will import the data and train the model when it initialization.
+Make an API call to: http://127.0.0.1:8000/predict and it will return a prediction and the actual label.
+"""
 
 
 # Server
@@ -8,6 +11,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 # Modeling
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 app = FastAPI()
@@ -40,10 +44,10 @@ def predict(data: Data):
         # Extract data in correct order
         data_dict = data.dict()
         to_predict = pd.DataFrame(data_dict, index=[0])
-        result = data_dict['Survived']
+        result = data_dict['Survived']  # Save Result to compare against prediction
         test_feat = to_predict.iloc[:, 1:]
-        #
-        pred_result = logreg.predict(test_feat)
+
+        pred_result = logreg.predict(test_feat)     # Predict result from Request
         pred_result = pred_result[0].item()
         return {"prediction": pred_result, "result": result}
 
